@@ -1,32 +1,27 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "withertweaks",
   "version": "${version}",
-  "name": "Example Mod",
+  "name": "Wither Tweaks",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
-    "Me!"
+    "Tetro48"
   ],
   "contact": {
-    "homepage": "https://legacyfabric.net/",
-    "sources": "https://github.com/Legacy-Fabric/fabric-example-mod"
+    "sources": "https://github.com/Tetro48/BTWAddon-WitherTweaks"
   },
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "net.fabricmc.example.ExampleMod"
-    ],
     "btw:addon": [
-      "btw.community.example.ExampleAddon"
+      "net.tetro48.withers.WitherTweaksAddon"
     ]
   },
   "custom": {
-    "btw:addon_prefix": "EX"
+    "btw:addon_prefix": "WT"
   },
   "mixins": [
-    "modid.mixins.json"
+    "withertweaks.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.14.19",
