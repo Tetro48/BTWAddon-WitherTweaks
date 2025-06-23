@@ -1,12 +1,10 @@
 package net.tetro48.withers;
 
-import net.minecraft.src.Entity;
 import net.minecraft.src.EntityWither;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 

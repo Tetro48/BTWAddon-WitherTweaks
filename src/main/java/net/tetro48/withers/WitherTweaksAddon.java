@@ -2,7 +2,6 @@ package net.tetro48.withers;
 
 import btw.AddonHandler;
 import btw.BTWAddon;
-import btw.block.tileentity.beacon.MagneticPointList;
 import btw.world.util.data.DataEntry;
 import btw.world.util.data.DataProvider;
 import net.minecraft.src.NBTTagList;

@@ -1,6 +1,5 @@
 package net.tetro48.withers.mixin;
 
-import net.minecraft.src.ChunkCoordinates;
 import net.minecraft.src.ChunkProviderServer;
 import net.minecraft.src.WorldServer;
 import net.tetro48.withers.WitherChunkLoaderData;

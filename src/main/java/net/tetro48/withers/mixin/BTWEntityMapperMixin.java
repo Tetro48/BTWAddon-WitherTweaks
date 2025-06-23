@@ -1,10 +1,7 @@
 package net.tetro48.withers.mixin;
 
-import btw.BTWMod;
-import btw.entity.mechanical.source.WaterWheelEntity;
 import btw.entity.util.BTWEntityMapper;
 import net.minecraft.src.EntityList;
-import net.minecraft.src.EntityWither;
 import net.tetro48.withers.DormantWither;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
