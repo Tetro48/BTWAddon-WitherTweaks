@@ -3,7 +3,7 @@
   "id": "withertweaks",
   "version": "${version}",
   "name": "Wither Tweaks",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "This adds wither chunk loading support, and adds Dormant Wither mob, which is basically a Wither, but does nothing but chunk load.",
   "authors": [
     "Tetro48"
   ],
