@@ -15,6 +15,13 @@ public class DormantWither extends EntityWither {
 	}
 
 	@Override
+	public void entityInit() {
+		super.entityInit();
+		this.dataWatcher.updateObject(21, 0);
+	}
+
+
+	@Override
 	protected void updateAITasks() {
 		if (this.func_82212_n() > 0) {
 			int var1 = this.func_82212_n() - 1;
@@ -34,6 +41,10 @@ public class DormantWither extends EntityWither {
 		if (this.recentlyOnChoppingBlockCountdown > 0) {
 			--this.recentlyOnChoppingBlockCountdown;
 		}
+		if (getChunkLoadSeconds() > 28800 && this.isEntityAlive()) {
+			this.attackEntityFrom(new EntityDamageSource("overflow_explosion", null), 9999);
+			this.worldObj.newExplosion(this, this.posX, this.posY + (double)this.getEyeHeight(), this.posZ, 7.0F, false, this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing") && WitherTweaksAddon.canDormantWitherGrief);
+		}
 	}
 	@Override
 	protected String getLivingSound() {
@@ -43,8 +54,10 @@ public class DormantWither extends EntityWither {
 	@Override
 	public boolean isArmored() {
 		if (getChunkLoadSeconds() <= 0) return super.isArmored();
+		else if (getChunkLoadSeconds() < 2) return ticksExisted % 8 < 4;
 		else if (getChunkLoadSeconds() < 10) return ticksExisted % 20 < 10;
 		else if (getChunkLoadSeconds() < 30) return ticksExisted % 120 < 110;
+		else if (getChunkLoadSeconds() > 27000) return ticksExisted % 2 < 1;
 		else return true;
 	}
 

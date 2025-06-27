@@ -20,9 +20,9 @@ public abstract class EntityWitherMixin extends EntityMob {
 	public EntityWitherMixin(World par1World) {
 		super(par1World);
 	}
-	@Inject(method = "entityInit", at = @At("RETURN"))
+	@Inject(method = "entityInit", at = @At("HEAD"))
 	private void entityInit(CallbackInfo ci) {
-		this.dataWatcher.addObject(21, 0);
+		this.dataWatcher.addObject(21, Integer.MAX_VALUE);
 	}
 	@Inject(method = "writeEntityToNBT", at = @At("RETURN"))
 	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound, CallbackInfo ci) {
@@ -47,19 +47,21 @@ public abstract class EntityWitherMixin extends EntityMob {
 		this.dataWatcher.updateObject(21, getChunkLoadSeconds() + seconds);
 	}
 
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
+	@Inject(method = "onLivingUpdate", at = @At("TAIL"))
+	public void injectLivingUpdate(CallbackInfo ci) {
 		if (ticksExisted % 20 == 0) {
 			if (getChunkLoadSeconds() > 0) {
-				addChunkLoadSeconds(-1);
+				if (getChunkLoadSeconds() < Integer.MAX_VALUE) {
+					addChunkLoadSeconds(-1);
+				}
 				if (!isPowered) {
 					isPowered = true;
 					loadChunks();
-					this.playSound("mob.wither.spawn", 1F, 1.75F + this.rand.nextFloat() * 0.25F);
 				}
 				WitherChunkLoaderList chunkLoaderList = worldObj.getData(WitherTweaksAddon.CHUNK_LOADER_LIST);
 				chunkLoaderList.updateChunkLoaderPosition((EntityWither)(Object)this);
-			} else {
+			}
+			if (getChunkLoadSeconds() <= 0){
 				if (isPowered) {
 					isPowered = false;
 					this.playSound("mob.wither.death", 1F, 1.75F + this.rand.nextFloat() * 0.25F);
@@ -67,6 +69,7 @@ public abstract class EntityWitherMixin extends EntityMob {
 				unloadChunks();
 			}
 		}
+		if (this.isLivingDead) return;
 		List entities = this.worldObj.getEntitiesWithinAABB(EntityXPOrb.class, this.boundingBox.expand(2.0d, 3.0d, 2.0d));
 		Iterator orbIterator = entities.iterator();
 		EntityXPOrb closestOrb = null;
@@ -83,7 +86,7 @@ public abstract class EntityWitherMixin extends EntityMob {
 				dClosestOrbDistSq = dDistSq;
 			}
 		}
-		if (closestOrb != null && !closestOrb.isDead) {
+		if (closestOrb != null && !closestOrb.isDead && getChunkLoadSeconds() < Integer.MAX_VALUE) {
 			this.playSound("random.orb", 0.1F, 0.5F * ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.8F));
 			addChunkLoadSeconds(closestOrb.xpValue * 15);
 			closestOrb.setDead();
@@ -94,7 +97,6 @@ public abstract class EntityWitherMixin extends EntityMob {
 		if (isPowered) {
 			isPowered = false;
 			unloadChunks();
-			this.playSound("mob.wither.death", 0.5f, 1.75F + this.rand.nextFloat() * 0.25F);
 		}
 	}
 
