@@ -53,7 +53,7 @@ public class WitherChunkLoaderList {
 				return;
 			}
 		}
-		WitherChunkLoaderData newChunkLoader = new WitherChunkLoaderData(wither.getUniqueID(), (int) (wither.posX/16), (int) (wither.posZ/16), wither.dimension);
+		WitherChunkLoaderData newChunkLoader = new WitherChunkLoaderData(wither.getUniqueID(), (int) (wither.posX/16), (int) (wither.posZ/16));
 		this.witherChunkLoaders.add(newChunkLoader);
 	}
 
@@ -62,7 +62,6 @@ public class WitherChunkLoaderList {
 		if (chunkLoaderData != null) {
 			chunkLoaderData.chunkX = (int) (wither.posX / 16);
 			chunkLoaderData.chunkZ = (int) (wither.posZ / 16);
-			chunkLoaderData.dimension = wither.dimension;
 		}
 	}
 

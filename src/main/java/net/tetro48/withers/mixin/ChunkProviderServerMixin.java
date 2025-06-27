@@ -19,14 +19,12 @@ public abstract class ChunkProviderServerMixin {
 	@Inject(method = "unloadChunksIfNotNearSpawn", at = @At("HEAD"), cancellable = true)
 	private void forceChunkLoad(int par1, int par2, CallbackInfo ci) {
 		List<WitherChunkLoaderData> witherChunkLoaderList = this.worldObj.getData(WitherTweaksAddon.CHUNK_LOADER_LIST).witherChunkLoaders;
+		int iChunkViewDistance = this.worldObj.getMinecraftServer().getConfigurationManager().getViewDistance();
 		for (WitherChunkLoaderData witherChunkLoader : witherChunkLoaderList) {
-			if (witherChunkLoader.dimension == this.worldObj.provider.dimensionId) {
-				int witherChunkX = witherChunkLoader.chunkX;
-				int witherChunkZ = witherChunkLoader.chunkZ;
-				int iChunkViewDistance = this.worldObj.getMinecraftServer().getConfigurationManager().getViewDistance();
-				if (par1 >= witherChunkX - iChunkViewDistance && par1 <= witherChunkX + iChunkViewDistance && par2 >= witherChunkZ - iChunkViewDistance && par2 <= witherChunkZ + iChunkViewDistance) {
-					ci.cancel();
-				}
+			int witherChunkX = witherChunkLoader.chunkX;
+			int witherChunkZ = witherChunkLoader.chunkZ;
+			if (par1 >= witherChunkX - iChunkViewDistance && par1 <= witherChunkX + iChunkViewDistance && par2 >= witherChunkZ - iChunkViewDistance && par2 <= witherChunkZ + iChunkViewDistance) {
+				ci.cancel();
 			}
 		}
 	}

@@ -7,13 +7,11 @@ import java.util.UUID;
 public class WitherChunkLoaderData {
 	public UUID entityUUID;
 	public int chunkX, chunkZ;
-	public int dimension;
 
-	public WitherChunkLoaderData(UUID _entityUUID, int _chunkX, int _chunkZ, int _dimension) {
+	public WitherChunkLoaderData(UUID _entityUUID, int _chunkX, int _chunkZ) {
 		this.entityUUID = _entityUUID;
 		this.chunkX = _chunkX;
 		this.chunkZ = _chunkZ;
-		this.dimension = _dimension;
 	}
 
 	public WitherChunkLoaderData(NBTTagCompound tagCompound) {
@@ -24,7 +22,6 @@ public class WitherChunkLoaderData {
 		this.entityUUID = new UUID(tagCompound.getLong("UUIDMost"), tagCompound.getLong("UUIDLeast"));
 		this.chunkX = tagCompound.getInteger("chunkX");
 		this.chunkZ = tagCompound.getInteger("chunkZ");
-		this.dimension = tagCompound.getInteger("dimension");
 	}
 
 	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
@@ -32,7 +29,6 @@ public class WitherChunkLoaderData {
 		tagCompound.setLong("UUIDLeast", this.entityUUID.getLeastSignificantBits());
 		tagCompound.setInteger("chunkX", this.chunkX);
 		tagCompound.setInteger("chunkZ", this.chunkZ);
-		tagCompound.setInteger("dimension", this.dimension);
 		return tagCompound;
 	}
 }

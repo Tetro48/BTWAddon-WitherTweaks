@@ -26,9 +26,7 @@ public abstract class WorldMixin {
 	private void addChunkLoaders(CallbackInfo ci) {
 		List<WitherChunkLoaderData> witherChunkLoaderList = getData(WitherTweaksAddon.CHUNK_LOADER_LIST).witherChunkLoaders;
 		for (WitherChunkLoaderData witherChunkLoader : witherChunkLoaderList) {
-			if (witherChunkLoader.dimension == this.provider.dimensionId) {
-				addAreaAroundChunkToActiveChunkMap(witherChunkLoader.chunkX, witherChunkLoader.chunkZ);
-			}
+			addAreaAroundChunkToActiveChunkMap(witherChunkLoader.chunkX, witherChunkLoader.chunkZ);
 		}
 	}
 }
