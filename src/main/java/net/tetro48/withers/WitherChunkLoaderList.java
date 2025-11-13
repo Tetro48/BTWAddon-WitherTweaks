@@ -1,5 +1,6 @@
 package net.tetro48.withers;
 
+import net.minecraft.src.Entity;
 import net.minecraft.src.EntityWither;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
@@ -32,7 +33,7 @@ public class WitherChunkLoaderList {
 	}
 
 	public NBTTagList saveToNBT() {
-		NBTTagList tagList = new NBTTagList("WTWitherChunkLoaders");
+		NBTTagList tagList = new NBTTagList("WitherChunkLoaders");
 
 		for (WitherChunkLoaderData witherChunkLoader : this.witherChunkLoaders) {
 			NBTTagCompound tempTagCompound = new NBTTagCompound();
@@ -47,32 +48,22 @@ public class WitherChunkLoaderList {
 		this.witherChunkLoaders.removeIf(tempChunkLoader -> tempChunkLoader.entityUUID == uuid);
 	}
 
-	public void addChunkLoader(EntityWither wither) {
+	public WitherChunkLoaderData addOrGetChunkLoader(Entity entity) {
 		for (WitherChunkLoaderData tempChunkLoader : this.witherChunkLoaders) {
-			if (tempChunkLoader.entityUUID == wither.getUniqueID()) {
-				return;
+			if (tempChunkLoader.entityUUID.equals(entity.getUniqueID())) {
+				return tempChunkLoader;
 			}
 		}
-		WitherChunkLoaderData newChunkLoader = new WitherChunkLoaderData(wither.getUniqueID(), (int) (wither.posX/16), (int) (wither.posZ/16));
+		WitherChunkLoaderData newChunkLoader = new WitherChunkLoaderData(entity.getUniqueID(), (int) (entity.posX/16), (int) (entity.posZ/16));
 		this.witherChunkLoaders.add(newChunkLoader);
+		return newChunkLoader;
 	}
 
 	public void updateChunkLoaderPosition(EntityWither wither) {
-		WitherChunkLoaderData chunkLoaderData = getWitherChunkLoaderWithUUID(wither.getUniqueID());
+		WitherChunkLoaderData chunkLoaderData = addOrGetChunkLoader(wither);
 		if (chunkLoaderData != null) {
 			chunkLoaderData.chunkX = (int) (wither.posX / 16);
 			chunkLoaderData.chunkZ = (int) (wither.posZ / 16);
 		}
 	}
-
-	public WitherChunkLoaderData getWitherChunkLoaderWithUUID(UUID uuid) {
-		for(WitherChunkLoaderData tempChunkLoader : this.witherChunkLoaders) {
-			if (tempChunkLoader.entityUUID == uuid) {
-				return tempChunkLoader;
-			}
-		}
-
-		return null;
-	}
-
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @Mixin(World.class)
 public abstract class WorldMixin {
 
-	@Shadow public abstract <T> T getData(DataEntry<T> entry);
+	@Shadow public abstract <T> T getData(DataEntry.WorldDataEntry<T> entry);
 
 	@Shadow @Final public WorldProvider provider;
 

@@ -103,7 +103,7 @@ public abstract class EntityWitherMixin extends EntityMob {
 	@Unique
 	private void loadChunks() {
 		WitherChunkLoaderList chunkLoaderList = worldObj.getData(WitherTweaksAddon.CHUNK_LOADER_LIST);
-		chunkLoaderList.addChunkLoader((EntityWither)(Object)this);
+		chunkLoaderList.addOrGetChunkLoader((EntityWither)(Object)this);
 		worldObj.setData(WitherTweaksAddon.CHUNK_LOADER_LIST, chunkLoaderList);
 	}
 	@Unique
