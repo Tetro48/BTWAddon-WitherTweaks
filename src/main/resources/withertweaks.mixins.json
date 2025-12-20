@@ -8,7 +8,7 @@
     "ChunkProviderServerMixin",
     "EntityWitherMixin",
     "UrnEntityMixin",
-    "WorldMixin"
+    "WorldServerMixin"
   ],
   "client": [
   ],

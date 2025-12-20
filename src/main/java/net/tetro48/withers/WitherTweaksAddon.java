@@ -1,9 +1,10 @@
 package net.tetro48.withers;
 
-import btw.AddonHandler;
-import btw.BTWAddon;
-import btw.world.util.data.DataEntry;
-import btw.world.util.data.DataProvider;
+import api.AddonHandler;
+import api.BTWAddon;
+import api.config.AddonConfig;
+import api.world.data.DataEntry;
+import api.world.data.DataProvider;
 import net.minecraft.src.NBTTagList;
 
 import java.util.Map;
@@ -32,15 +33,17 @@ public class WitherTweaksAddon extends BTWAddon {
 	}
 
 	@Override
-	public void preInitialize() {
-		registerProperty("DormantWitherToggle", "True", "This toggles the summoning of a wither that's exclusively for chunk loading. Turn this off if you're running on a server where this addon is not expected for the client.");
-		registerProperty("DormantWitherGriefToggle", "False", "This toggles the block damage from exploding Dormant Withers");
+	public void registerConfigProperties(AddonConfig config) {
+		config.registerBoolean("dormant-wither-toggle", true, "This toggles the summoning of a wither that's exclusively for chunk loading. Turn this off if you're running on a server where this addon is not expected for the client.");
+		config.updatePath("DormantWitherToggle", "dormant-wither-toggle");
+		config.registerBoolean("dormant-wither-grief-toggle", false, "This toggles the block damage from exploding Dormant Withers");
+		config.updatePath("DormantWitherGriefToggle", "dormant-wither-grief-toggle");
 	}
 
 	@Override
-	public void handleConfigProperties(Map<String, String> propertyValues) {
-		isDormantWitherEnabled = Boolean.parseBoolean(propertyValues.get("DormantWitherToggle"));
-		canDormantWitherGrief = Boolean.parseBoolean(propertyValues.get("DormantWitherGriefToggle"));
+	public void handleConfigProperties(AddonConfig config) {
+		isDormantWitherEnabled = config.getBoolean("dormant-wither-toggle");
+		canDormantWitherGrief = config.getBoolean("dormant-wither-grief-toggle");
 	}
 
 	@Override

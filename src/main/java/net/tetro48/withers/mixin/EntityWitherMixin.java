@@ -44,7 +44,9 @@ public abstract class EntityWitherMixin extends EntityMob {
 	}
 	@Unique
 	public void addChunkLoadSeconds(int seconds) {
-		this.dataWatcher.updateObject(21, getChunkLoadSeconds() + seconds);
+		if (getChunkLoadSeconds() < Integer.MAX_VALUE) {
+			this.dataWatcher.updateObject(21, getChunkLoadSeconds() + seconds);
+		}
 	}
 
 	@Inject(method = "onLivingUpdate", at = @At("TAIL"))
